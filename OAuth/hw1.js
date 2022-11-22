@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 })
 
 app.post('/login', (req, res) => {
-    if (req.body.username == "admin" && req.body.password == "1234") {
+    if (req.body.username == "apirat" && req.body.password == "1234") {
         const token = jtoken.sign({ username: "admin" }, key)
         return res.json({ token })
     }

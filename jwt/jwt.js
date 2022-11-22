@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 3100;
 const jtoken = require('jsonwebtoken');
 const cookieparser = require('cookie-parser');
 const key = "ewfoewopfjwpeofjwpeofj";
@@ -12,6 +12,7 @@ app.use(cookieparser());
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/login.html")
 })
+
 app.get('/home', (req, res) => {
     if (!req.cookies.token) {
         return res.redirect('/error')
@@ -23,11 +24,17 @@ app.get('/home', (req, res) => {
     })
     res.sendFile(__dirname + "/data.html")
 })
+
 app.get('/error', (req, res) => {
     res.sendFile(__dirname + "/error.html")
 })
+app.get('/logout', (req, res) => {
+    res.cookie('token', "")
+    res.redirect('/')
+})
+
 app.post('/login', (req, res) => {
-    if (req.body.username == "admin" && req.body.password == "1234") {
+    if (req.body.username == "apirat" && req.body.password == "1234") {
         const token = jtoken.sign({ username: "admin" }, key)
         res.cookie('token', token)
         res.redirect('/home')
@@ -38,6 +45,7 @@ app.post('/login', (req, res) => {
     }
 })
 
-app.listen(port, () => {
+
+app.listen(3100, () => {
     console.log(`Listening at http://localhost:$(port)`);
 });
